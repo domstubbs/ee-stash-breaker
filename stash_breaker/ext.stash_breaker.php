@@ -52,7 +52,8 @@ class Stash_breaker_ext {
 			'delete_entries_end',
 			'update_multi_entries_start',
 			'low_variables_post_save',
-			'low_variables_delete'
+			'low_variables_delete',
+			'structure_reorder_end',
 		);
 
 		foreach($hooks as $hook)
