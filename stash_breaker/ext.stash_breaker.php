@@ -54,6 +54,7 @@ class Stash_breaker_ext {
 			'low_variables_post_save',
 			'low_variables_delete',
 			'structure_reorder_end',
+			'deployment_hooks_post_deploy',
 		);
 
 		foreach($hooks as $hook)
