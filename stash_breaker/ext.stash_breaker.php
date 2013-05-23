@@ -13,7 +13,7 @@
 class Stash_breaker_ext {
 
 	public $settings       = array();
-	public $description    = 'Automatically flush site-scoped Stashes when entries are updated. Requires Stash 2.3.0 or greater.';
+	public $description    = 'Automatically flush site-scoped Stashes when content is updated. Requires Stash 2.3.0 or greater.';
 	public $docs_url       = '';
 	public $name           = 'Stash Breaker';
 	public $settings_exist = 'n';
@@ -53,6 +53,7 @@ class Stash_breaker_ext {
 			'update_multi_entries_start',
 			'low_variables_post_save',
 			'low_variables_delete',
+			'low_reorder_post_sort',
 			'structure_reorder_end',
 			'deployment_hooks_post_deploy',
 		);
