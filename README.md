@@ -18,3 +18,41 @@ This is an extremely basic extension for [Stash](https://github.com/croxton/Stas
 ## Updating
 
 Disable and reenable the extension to take advantage of newly added hooks.
+
+## CE Cache Support
+
+You can now use Stash Breaker to flush [CE Cache](http://www.causingeffect.com/software/expressionengine/ce-cache) data when the above hooks are triggered as well. You'll need to add a few config variables to set this up:
+
+	/**
+	 * Which Stash Breaker hooks should trigger CE Cache cache breaking
+	 */
+	$config['stash_breaker_ce_cache_hooks'] = array();
+
+	/**
+	 * CE Cache items to remove
+	 */
+	$config['stash_breaker_ce_cache_items'] = array();
+
+	/**
+	 * CE Cache tags to remove
+	 */
+	$config['stash_breaker_ce_cache_tags'] = array();
+
+	/**
+	 * Toggle CE Cache refresh support
+	 */
+	$config['stash_breaker_ce_cache_refresh'] = false;
+
+	/**
+	 * Seconds between refreshing CE Cache items (if refreshing is enabled)
+	 */
+	$config['stash_breaker_ce_cache_refresh_time'] = 1;
+
+
+A basic config might look like this:
+
+	$config['stash_breaker_ce_cache_hooks'] = array('low_variables_post_save');
+	$config['stash_breaker_ce_cache_tags'] = array('home');
+	$config['stash_breaker_ce_cache_refresh'] = true;
+
+This would clear and refresh any caches tagged "home" when Low Variables are saved.

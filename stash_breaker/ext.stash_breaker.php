@@ -17,7 +17,7 @@ class Stash_breaker_ext {
 	public $docs_url       = '';
 	public $name           = 'Stash Breaker';
 	public $settings_exist = 'n';
-	public $version        = '0.1';
+	public $version        = '0.2';
 
 	/**
 	 * Constructor
@@ -27,6 +27,7 @@ class Stash_breaker_ext {
 	public function __construct($settings = '')
 	{
 		$this->EE =& get_instance();
+		$this->EE->load->model('addons_model');
 		$this->settings = $settings;
 	}
 
@@ -91,6 +92,51 @@ class Stash_breaker_ext {
 		);
 
 		Stash::destroy($params);
+
+		/**
+		 * Bonus feature! Also flush CE Cache caches for specific hooks.
+		 */
+
+		$ce_cache_hooks = $this->EE->config->item('stash_breaker_ce_cache_hooks');
+		$backtrace = debug_backtrace();
+		$hook_called = $backtrace[2]['args'][0];
+
+		if (in_array($hook_called, $ce_cache_hooks))
+		{
+
+			if ( ! $this->EE->addons_model->module_installed('ce_cache'))
+			{
+				return;
+			}
+
+			if ( ! class_exists('Ce_cache_break'))
+			{
+				include_once PATH_THIRD . 'ce_cache/libraries/Ce_cache_break.php';
+			}
+
+			$cache_break = new Ce_cache_break();
+
+			$ce_cache_config = array(
+				'stash_breaker_ce_cache_items'        => array(),
+				'stash_breaker_ce_cache_tags'         => array(),
+				'stash_breaker_ce_cache_refresh'      => false,
+				'stash_breaker_ce_cache_refresh_time' => 1
+			);
+
+			foreach ($ce_cache_config as $name => $value)
+			{
+				if ($this->EE->config->item($name)) {
+					$ce_cache_config[$name] = $this->EE->config->item($name);
+				}
+			}
+
+			$cache_break->break_cache(
+				$ce_cache_config['stash_breaker_ce_cache_items'],
+				$ce_cache_config['stash_breaker_ce_cache_tags'],
+				$ce_cache_config['stash_breaker_ce_cache_refresh'],
+				$ce_cache_config['stash_breaker_ce_cache_refresh_time']
+			);
+		}
 	}
 
 	// ----------------------------------------------------------------------
