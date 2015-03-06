@@ -17,7 +17,7 @@ class Stash_breaker_ext {
 	public $docs_url       = '';
 	public $name           = 'Stash Breaker';
 	public $settings_exist = 'n';
-	public $version        = '0.2';
+	public $version        = '0.3';
 
 	/**
 	 * Constructor
@@ -57,6 +57,12 @@ class Stash_breaker_ext {
 			'low_reorder_post_sort',
 			'structure_reorder_end',
 			'deployment_hooks_post_deploy',
+			'edit_wiki_article_end',
+			'forum_submit_post_end',
+			'insert_comment_end',
+			'delete_comment_additional',
+			'update_comment_additional',
+			'category_save'
 		);
 
 		foreach($hooks as $hook)
@@ -101,7 +107,7 @@ class Stash_breaker_ext {
 		$backtrace = debug_backtrace();
 		$hook_called = $backtrace[2]['args'][0];
 
-		if (in_array($hook_called, $ce_cache_hooks))
+		if (is_array($ce_cache_hooks) && in_array($hook_called, $ce_cache_hooks))
 		{
 
 			if ( ! $this->EE->addons_model->module_installed('ce_cache'))

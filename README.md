@@ -9,6 +9,10 @@ This is an extremely basic extension for [Stash](https://github.com/croxton/Stas
 * [Structure](http://buildwithstructure.com) pages are reordered.
 * [Deployment hooks](https://github.com/focuslabllc/deployment_hooks.ee2_addon) are called.
 * [Low Reorder](http://gotolow.com/addons/low-reorder) sets are reordered.
+* Wiki articles are edited
+* Posts are submitted in a Forum
+* Comments are submitted, edited, or deleted
+* Categories are edited or deleted
 
 ## Installation
 
